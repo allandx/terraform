@@ -1,4 +1,4 @@
-# tfassignment
+# Terraform Assignment
 
 ```css
 terraform/

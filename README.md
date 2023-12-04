@@ -5,7 +5,9 @@ terraform/
 ├── iam/
     ├── main.tf
     ├── variables.tf
+    ├── provider.tf
     └── terraform.tfvars
+    
 ├── modules/
 │   ├── iam_users/
 │   │   ├── main.tf

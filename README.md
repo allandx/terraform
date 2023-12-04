@@ -1,5 +1,10 @@
 # Terraform Assignment
 
+
+
+## Scenario 2
+
+### Directory Structure:
 ```css
 terraform/
 ├── iam/

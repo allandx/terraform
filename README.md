@@ -2,10 +2,10 @@
 
 ```css
 terraform/
-iam/
-  ├── main.tf
-  ├── variables.tf
-  └── terraform.tfvars
+├── iam/
+    ├── main.tf
+    ├── variables.tf
+    └── terraform.tfvars
 ├── modules/
 │   ├── iam_users/
 │   │   ├── main.tf

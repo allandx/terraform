@@ -7,18 +7,21 @@
 ### Directory Structure:
 ```css
 terraform/
-├── iam/
-    ├── main.tf
-    ├── variables.tf
-    ├── provider.tf
-    └── terraform.tfvars
-    
+├── dev
+    ├── common/
+        └── iam/
+            ├── main.tf
+            ├── variables.tf
+            ├── provider.tf
+            └── terraform.tfvars
 ├── modules/
-│   ├── iam_users/
-│   │   ├── main.tf
-│   │   └── variables.tf
-│   └── iam_groups/
-│       ├── main.tf
-│       └── variables.tf
-  
+    ├── iam_users/
+    │   ├── main.tf
+    │   └── variables.tf
+    └── rds/
+        ├── main.tf
+        └── variables.t
+    └── s3/
+         ├── main.tf
+         └── variables.t
 ```

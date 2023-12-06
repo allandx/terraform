@@ -6,6 +6,7 @@ Product Alpha requires the following AWS (or other equivalent clouds) resources 
     - Bucket name: s3_proj_alpha
 - AWS RDS instance
     - Instance name: db_proj_alpha
+      
 Product Beta also requires the following AWS (or other equivalent clouds) resources to be set
 up:
 - AWS S3 bucket

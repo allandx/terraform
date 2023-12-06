@@ -58,7 +58,7 @@ terraform/
 ```
 The above directory structure consist of a common child module hosted under `modules/rds/` and `modules/s3/`. Assuming only a single environment is required(dev), the folders are split into product team - alpha and beta. The child module is called and the input variables are passed using terraform.tfvars in the respective team's folder. This allows logical seperation of resources between teams and the statefiles are managed seperately.
 
-As the project grows with different environments, more folders such as prod or stage could be created. Alternatively, terraform workspace could be useful for different environment.
+As the project grows with different environments, more folders such as prod or stage could be created. Alternatively, terraform workspace could be utilized for different environments.
 
 ### Assumptions
 - region is ap-southeast-1 
@@ -132,7 +132,7 @@ This structure allows the flexibility of the cloud administrator to add new iam 
 - Both developers and QA roles requires identical permissions to access resources corresponding to their respective products – Alpha, Beta, and Gamma. The IAM group names also align with the product teams’ team for easy reference
 - 1 environment - dev
 - As per best practice, remote backend in S3 is configured under `providers.tf`, however code is being developed locally for now
-- Permission policies attached to the user groups based on the products they are working on
+- Permission policies attached to the user groups based on the product team or the products they are working on(for e.g. iam users working on product alpha would be placed in iam group `Alpha`). This is aligned with AWS IAM best practices.
 
 ### Quickstart
 To create resources

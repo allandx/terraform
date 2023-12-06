@@ -93,6 +93,16 @@ Note: additional configurations are located in terraform.tfvars. For e.g. to spi
 
 
 ## Scenario 2
+You need to create IAM users for these newly joined developers of Product Alpha, Beta and Gamma.
+This is the list of users to be created, along with their roles and products they are working on:
+![image](https://github.com/allandx/terraform/assets/81692410/13dc297b-935c-4203-8dab-6c481b4110c2)
+
+Requirements
+
+1. Each IAM user must be tagged with information of their role and the product team(s)
+they are in.
+2. Each IAM user must be associated with a user group.
+3. Each user group will be attached to distinct permission policies that would allow them to access resources associated with the product they are working on.
 
 ### Directory Structure:
 ```css
@@ -108,18 +118,21 @@ terraform/
 
 ├── modules/
     ├── iam_users/
-    │   ├── main.tf
-    │   └── variables.tf
+        ├── main.tf
+        └── variables.tf
     
 ```
 The above directory structure consist of a common child module hosted under `modules/iam_users/`. Assuming only a single environment is required(dev), the child module is called and the input variables are passed using terraform.tfvars. 
 
-The parent module is hosted under `dev/common/iam/` which includes the storing of its remote statefile and terraform.tfvars. This allows logical seperation of the IAM related resources which is common amongst all team.
+The parent module is hosted under `dev/common/iam/` which includes the storing of its remote statefile and terraform.tfvars. This allows logical seperation of the IAM related resources which is common amongst all team. 
+
+This structure allows the flexibility of the cloud administrator to add new iam users to specific group, role, and products with ease. 
 
 ### Assumptions
 - Both developers and QA roles requires identical permissions to access resources corresponding to their respective products – Alpha, Beta, and Gamma. The IAM group names also align with the product teams’ team for easy reference
 - 1 environment - dev
 - As per best practice, remote backend in S3 is configured under `providers.tf`, however code is being developed locally for now
+- Permission policies attached to the user groups based on the products they are working on
 
 ### Quickstart
 To create resources

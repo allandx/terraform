@@ -11,16 +11,16 @@ terraform/
         ├── variables.tf
         ├── provider.tf
         ├── backend.tf
-        └── terraform.tfvars
+        ├── terraform.tfvars
+        └── s3_policy.json
     ├── beta/
         └── beta/
         ├── main.tf
         ├── variables.tf
         ├── provider.tf
         ├── backend.tf
-        └── terraform.tfvars
-        
-
+        ├──terraform.tfvars
+        └── s3_policy.json
 ├── modules/
     └── rds/
         ├── main.tf
@@ -29,7 +29,16 @@ terraform/
         ├── main.tf
         └── variables.t
 ```
+### Assumptions
+- region is ap-southeast-1 
+- 1 working environment - dev
+- As per best practice, remote backend in S3 is configured under `providers.tf`, however code is being developed locally for now
 
+### Verify that the resources are in place in aws platform
+#### rds
+![Alt text](image.png)
+#### S3
+![Alt text](image-1.png)
 
 
 ## Scenario 2
@@ -76,6 +85,7 @@ terraform destroy
 ### Assumptions
 - Both developers and QA roles requires identical permissions to access resources corresponding to their respective products – Alpha, Beta, and Gamma. The IAM group names also align with the product teams’ team for easy reference
 - 1 environment - dev
+- As per best practice, remote backend in S3 is configured under `providers.tf`, however code is being developed locally for now
 
 ### To add new users belonging to existing product team/group
 - Update terraform.tfvars in dev/common/iam as below

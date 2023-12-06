@@ -73,6 +73,8 @@ As the project grows with different environments, more folders such as prod or s
 - As per best practice, remote backend in S3 is configured under `providers.tf`, however code is being developed locally for testing purposes
 - VPC and subnets are setup, minimally in 1 region with 2 azs
 
+To note: s3 bucket names and rds instances' identifiers only allow '-' in their naming conventions but not '_'
+
 ### Quickstart
 To create resources
 

@@ -56,7 +56,13 @@ terraform/
         ├── main.tf
         └── variables.t
 ```
-The above directory structure consist of a common child module hosted under `modules/rds/` and `modules/s3/`. Assuming only a single environment is required(dev), the folders are split into product team - alpha and beta. The child module is called and the input variables are passed using terraform.tfvars in the respective team's folder. This allows logical seperation of resources between teams and the statefiles are managed seperately.
+The above directory structure consist of a common child module hosted under `modules/rds/` and `modules/s3/`.
+
+Assuming only a single environment is required(dev), the parent modules are split into 2 folders named after the product teams - alpha and beta. 
+
+The child module is called and the input variables are passed using terraform.tfvars in the respective team's folder. This allows logical seperation of resources between teams and the statefiles are managed seperately.
+
+As the individual product team resources types and aws services grow, folders could be further created in the `/dev/<product>` to seperate different components(networking, compute) 
 
 As the project grows with different environments, more folders such as prod or stage could be created. Alternatively, terraform workspace could be utilized for different environments.
 

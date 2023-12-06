@@ -16,7 +16,8 @@ module "alpha_rds" {
   publicly_accessible         = each.value.publicly_accessible
   backup_retention_period     = each.value.backup_retention_period
 }
-
+# Terraform requires the rds password to be provided at the start when running apply 
+# Passwords are generated at parent module instead of child, for single rds instance or more than 1
 resource "random_password" "rds_password" {
   for_each = var.rds_instances
   length  = 16
@@ -24,6 +25,7 @@ resource "random_password" "rds_password" {
 }
 
 #Create s3 
+# s3 policies are attached as files so different s3 configurations can attach differnt files as needed
 module "alpha_s3" {
   source             = "../../modules/s3"
   bucket_name        = var.bucket_name

@@ -12,3 +12,4 @@ resource "aws_db_instance" "alpha_db_instance" {
   publicly_accessible        = var.publicly_accessible
   backup_retention_period    = var.backup_retention_period
 }
+

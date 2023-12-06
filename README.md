@@ -1,7 +1,34 @@
 # Terraform Assignment
 
 ## Scenario 1
+Product Alpha requires the following AWS (or other equivalent clouds) resources to be set up:
+- AWS S3 bucket
+    - Bucket name: s3_proj_alpha
+- AWS RDS instance
+    - Instance name: db_proj_alpha
+Product Beta also requires the following AWS (or other equivalent clouds) resources to be set
+up:
+- AWS S3 bucket
+    - Bucket name: s3_proj_beta
+- AWS RDS instance
+    - Instance name: db_proj_beta
+ 
+### Requirements
+You will also need to set up the resources according to existing hardening guidelines:
 
+Best Practices for creating S3 buckets
+1. Server-side encryption must be enabled.
+2. Bucket policies only allow HTTPS requests.
+3. Bucket must block public access.
+4. Bucket versioning must be enabled.
+   
+Best Practices for creating RDS Instances
+1. Master password for the database must be randomly generated.
+2. Backups must be enabled and retained for 7 days.
+3. Delete protection must be enabled.
+4. Minor engine upgrades will be applied automatically to the DB instance.
+5. Instance must not be publicly accessible.
+   
 ### Directory Structure
 ```css
 terraform/
@@ -19,7 +46,7 @@ terraform/
         ├── variables.tf
         ├── provider.tf
         ├── backend.tf
-        ├──terraform.tfvars
+        ├── terraform.tfvars
         └── s3_policy.json
 ├── modules/
     └── rds/
@@ -29,7 +56,7 @@ terraform/
         ├── main.tf
         └── variables.t
 ```
-The above directory structure consist of a common child module hosted under modules/rds/ and modules/s3/. Assuming only a single environment is required(dev), the folders are split into product team - alpha and beta. The child module is called and the input variables are passed using terraform.tfvars in the respective team. This allows logical seperation of resources between teams and the statefiles are managed seperately.
+The above directory structure consist of a common child module hosted under `modules/rds/` and `modules/s3/`. Assuming only a single environment is required(dev), the folders are split into product team - alpha and beta. The child module is called and the input variables are passed using terraform.tfvars in the respective team's folder. This allows logical seperation of resources between teams and the statefiles are managed seperately.
 
 As the project grows with different environments, more folders such as prod or stage could be created. Alternatively, terraform workspace could be useful for different environment.
 
@@ -37,6 +64,26 @@ As the project grows with different environments, more folders such as prod or s
 - region is ap-southeast-1 
 - 1 working environment - dev
 - As per best practice, remote backend in S3 is configured under `providers.tf`, however code is being developed locally for testing purposes
+- VPC and subnets are setup, minimally in 1 region with 2 azs
+
+### Quickstart
+To create resources
+
+```bash
+cd dev/<product-team>/
+terraform init
+# May require additional information such as aws credentials
+terraform plan
+# Applying plan
+terraform apply 
+```
+To destroy resources
+```bash
+cd dev/<product-team>/
+terraform init
+terraform destroy
+```
+Note: additional configurations are located in terraform.tfvars. For e.g. to spin up more than 1 rds instances 
 
 ### Verify that the resources are in place in aws platform
 #### rds
@@ -65,9 +112,14 @@ terraform/
     │   └── variables.tf
     
 ```
-The above directory structure consist of a common child module hosted under modules/iam_users/. Assuming only a single environment is required(dev), the child module is called and the input variables are passed using terraform.tfvars. 
+The above directory structure consist of a common child module hosted under `modules/iam_users/`. Assuming only a single environment is required(dev), the child module is called and the input variables are passed using terraform.tfvars. 
 
-The parent module is hosted under dev/common/iam/ which includes the storing of its remote statefile and terraform.tfvars. This allows logical seperation of the IAM related resources which is common amongst all team.
+The parent module is hosted under `dev/common/iam/` which includes the storing of its remote statefile and terraform.tfvars. This allows logical seperation of the IAM related resources which is common amongst all team.
+
+### Assumptions
+- Both developers and QA roles requires identical permissions to access resources corresponding to their respective products – Alpha, Beta, and Gamma. The IAM group names also align with the product teams’ team for easy reference
+- 1 environment - dev
+- As per best practice, remote backend in S3 is configured under `providers.tf`, however code is being developed locally for now
 
 ### Quickstart
 To create resources
@@ -86,10 +138,6 @@ cd dev/common/iam/
 terraform init
 terraform destroy
 ```
-### Assumptions
-- Both developers and QA roles requires identical permissions to access resources corresponding to their respective products – Alpha, Beta, and Gamma. The IAM group names also align with the product teams’ team for easy reference
-- 1 environment - dev
-- As per best practice, remote backend in S3 is configured under `providers.tf`, however code is being developed locally for now
 
 ### To add new users belonging to existing product team/group
 - Update terraform.tfvars in dev/common/iam as below

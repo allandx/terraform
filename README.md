@@ -29,10 +29,14 @@ terraform/
         ├── main.tf
         └── variables.t
 ```
+The above directory structure consist of a common child module hosted under modules/rds/ and modules/s3/. Assuming only a single environment is required(dev), the folders are split into product team - alpha and beta. The child module is called and the input variables are passed using terraform.tfvars in the respective team. This allows logical seperation of resources between teams and the statefiles are managed seperately.
+
+As the project grows with different environments, more folders such as prod or stage could be created. Alternatively, terraform workspace could be useful for different environment.
+
 ### Assumptions
 - region is ap-southeast-1 
 - 1 working environment - dev
-- As per best practice, remote backend in S3 is configured under `providers.tf`, however code is being developed locally for now
+- As per best practice, remote backend in S3 is configured under `providers.tf`, however code is being developed locally for testing purposes
 
 ### Verify that the resources are in place in aws platform
 #### rds
@@ -65,7 +69,7 @@ The above directory structure consist of a common child module hosted under modu
 
 The parent module is hosted under dev/common/iam/ which includes the storing of its remote statefile and terraform.tfvars. This allows logical seperation of the IAM related resources which is common amongst all team.
 
-## Quickstart
+### Quickstart
 To create resources
 
 ```bash

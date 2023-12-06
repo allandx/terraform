@@ -126,7 +126,7 @@ The above directory structure consist of a common child module hosted under `mod
 
 The parent module is hosted under `dev/common/iam/` which includes the storing of its remote statefile and terraform.tfvars. This allows logical seperation of the IAM related resources which is common amongst all team. 
 
-This structure allows the flexibility of the cloud administrator to add new iam users to specific group, role, and products with ease. 
+This structure allows the flexibility of the cloud administrator to add new iam users to specific group, role, and products with ease. An example is shown at the bottom.
 
 ### Assumptions
 - Both developers and QA roles requires identical permissions to access resources corresponding to their respective products – Alpha, Beta, and Gamma. The IAM group names also align with the product teams’ team for easy reference
@@ -152,7 +152,7 @@ terraform init
 terraform destroy
 ```
 
-### To add new users belonging to existing product team/group
+### To add new users
 - Update terraform.tfvars in dev/common/iam as below
 ```hcl
 users = [

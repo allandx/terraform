@@ -18,6 +18,7 @@ resource "aws_s3_bucket_ownership_controls" "s3_bucket_ownership_controls" {
 }
 
 # To block public access
+# Use resource "aws_s3_bucket_public_access_block" is better
 resource "aws_s3_bucket_acl" "s3_bucket_acl" {
   depends_on = [aws_s3_bucket_ownership_controls.s3_bucket_ownership_controls]
 
